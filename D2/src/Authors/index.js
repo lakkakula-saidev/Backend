@@ -19,6 +19,13 @@ const filePath = fileURLToPath(import.meta.url);
 const currentPath = dirname(filePath);
 const authorJSONPath = join(currentPath, "authors.json");
 
+const getAuthors = () => {
+  const content = JSON.parse(fs.readFileSync(authorJSONPath)); // 1. read the requested JSON file as the Buffer of machin unerstanalll and not han understandable
+  return content;
+};
+
+const writeBooks = (editedB) => {};
+
 authorRouter.post("/", (req, res) => {
   const newAuthor = { ...req.body, _id: uniqid(), createdAt: new Date() };
   const contentAsBuffer = fs.readFileSync(authorJSONPath).toString(); // 1. read the requested JSON file as the as human readable by converting the BUFFER into human readable
@@ -29,8 +36,7 @@ authorRouter.post("/", (req, res) => {
 });
 
 authorRouter.get("/", (req, res) => {
-  const contentAsBuffer = fs.readFileSync(authorJSONPath); // 1. read the requested JSON file as the Buffer of machin unerstanalll and not han understandable
-  const authors = JSON.parse(contentAsBuffer);
+  let authors = getAuthors();
   res.send(authors);
 });
 
@@ -41,21 +47,25 @@ authorRouter.get("/:id", (req, res) => {
 
   res.send(author);
 });
+
 authorRouter.put("/:id", (req, res) => {
-  const remainingAuthors = JSON.parse(
-    fs.readFileSync(authorJSONPath).toString()
-  ).filter((item) => item._id !== req.params.id);
+  const actualAuthors = JSON.parse(fs.readFileSync(authorJSONPath).toString());
+
+  const remainingAuthors = actualAuthors.filter(
+    (item) => item._id !== req.params.id
+  );
   const updatedAuthor = { ...req.body, _id: req.params.id };
   remainingAuthors.push(updatedAuthor);
-  fs.writeFileSync(authorJSONPath, JSON.stringify(authors));
+  fs.writeFileSync(authorJSONPath, JSON.stringify(remainingAuthors));
   res.send(updatedAuthor);
 });
+
 authorRouter.delete("/:id", (req, res) => {
   const remainingAuthors = JSON.parse(
     fs.readFileSync(authorJSONPath).toString()
   ).filter((item) => item._id !== req.params.id);
 
-  fs.writeFileSync(authorJSONPath, JSON.stringify(authors));
+  fs.writeFileSync(authorJSONPath, JSON.stringify(remainingAuthors));
   res.status(204).send();
 });
 export default authorRouter;
