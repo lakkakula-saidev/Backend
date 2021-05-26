@@ -1,5 +1,5 @@
 async function FormDataPost(Data, _id, string_1, string_2) {
-    const endpoint = `http://localhost:3001/${string_1}/${_id}/${string_2}`;
+    const endpoint = `${process.env.REACT_API_BE_URL}/${string_1}/${_id}/${string_2}`;
 
     try {
         let response = await fetch(endpoint, {

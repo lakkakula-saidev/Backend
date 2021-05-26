@@ -19,7 +19,7 @@ export default class BlogList extends Component {
     }
 
     async createPdf(e) {
-        const endpoint = `http://localhost:3001/blogPosts/${e.target.id}/loadPdf`;
+        const endpoint = `${process.env.REACT_API_BE_URL}/blogPosts/${e.target.id}/loadPdf`;
 
         fetch(endpoint, {
             method: "GET",
