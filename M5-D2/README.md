@@ -1,1 +1,0 @@
-# Strive Blog Template

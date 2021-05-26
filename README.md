@@ -1,1 +1,1 @@
-# This repository has Frontend code
+# Strive Blog Template
