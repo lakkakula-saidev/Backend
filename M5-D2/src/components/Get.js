@@ -1,7 +1,7 @@
 
 const Get = async (str1) => {
 
-    const endpoint = `${process.env.REACT_API_BE_URL}/${str1}`;
+    const endpoint = `${process.env.REACT_APP_API_URL}/${str1}`;
     let response
     try {
         response = await fetch(endpoint);
