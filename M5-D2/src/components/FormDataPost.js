@@ -1,6 +1,6 @@
 async function FormDataPost(Data, _id, string_1, string_2) {
-
-    const endpoint = `${process.env.REACT_APP_API_URL}/${string_1}/${_id}/${string_2}`;
+    const apiUrl = process.env.REACT_APP_API_URL
+    const endpoint = `${apiUrl}/${string_1}/${_id}/${string_2}`;
 
     try {
         let response = await fetch(endpoint, {
