@@ -20,7 +20,7 @@ const Post = async (str1, Data) => {
         return null
     }
 
-    return response
+
 }
 
 

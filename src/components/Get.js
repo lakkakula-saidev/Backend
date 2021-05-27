@@ -1,20 +1,16 @@
-
 const Get = async (str1) => {
-    const apiUrl = process.env.REACT_APP_API_URL
+    const apiUrl = process.env.REACT_APP_API_URL;
     const endpoint = `${apiUrl}/${str1}`;
-    let response
+    let response;
     try {
         response = await fetch(endpoint);
         if (response.ok) {
             response = await response.json();
-
+            return response;
         }
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
+};
 
-    return response
-}
-
-
-export default Get
+export default Get;
