@@ -21,7 +21,8 @@ export default class NewBlogPost extends Component {
                 avatar: "Author Avatar"
             }
         },
-        blogPostCover: null
+        blogPostCover: null,
+        email: { emailAddress: "lakkakula.saidev@gmail.com" }
     };
 
     ImageHandle(e) {
@@ -46,7 +47,7 @@ export default class NewBlogPost extends Component {
         } else {
             this.setState({ blogPost: { ...this.state.blogPost, [e.target.id]: e.target.value } });
         }
-        console.log(this.state.blogPost);
+        /*  console.log(this.state.blogPost); */
     }
 
     async postData(e) {
@@ -61,7 +62,11 @@ export default class NewBlogPost extends Component {
                 let formData = new FormData();
                 formData.append("uploadCover", this.state.blogPostCover);
                 let _id = response._id;
-                FormDataPost(formData, _id, "blogPosts", "uploadCover");
+                const post_truthy = await FormDataPost(formData, _id, "blogPosts", "uploadCover");
+                if (post_truthy) {
+                    await Post("mail", this.state.email);
+                    console.log("Email successfully sent...");
+                }
             }
         }
     }

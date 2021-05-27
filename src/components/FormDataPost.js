@@ -9,9 +9,11 @@ async function FormDataPost(Data, _id, string_1, string_2) {
         });
         if (response.ok) {
             console.log("Your File is posted");
+            return true
         }
     } catch (error) {
-        return alert(error);
+        return false;
+
     }
 }
 

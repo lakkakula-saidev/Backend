@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Spinner, Button } from "react-bootstrap";
 import BlogItem from "../blog-item";
 import Get from "../../Get.js";
+import { saveAs } from "file-saver";
 /* import download from "js-file-download";
 import { axios } from "axios"; */
 
@@ -21,18 +22,51 @@ export default class BlogList extends Component {
         const apiUrl = process.env.REACT_APP_API_URL;
         const endpoint = `${apiUrl}/blogPosts/${e.target.id}/loadPdf`;
 
-        fetch(endpoint, {
+        const requestOptions = {
             method: "GET",
-            headers: {
-                "Content-Type": "application/pdf",
-                Origin: "http://localhost:3000"
+            headers: { "Content-Type": "application/pdf" },
+            origin: "http//:localhost:3000"
+        };
+
+        /* 
+        fetch(`${endpoint}`, requestOptions)
+            .then((res) => {
+                return res.blob();
+            })
+            .then((blob) => {
+                const href = window.URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = href;
+                console.log("I am here");
+                link.setAttribute("download", "blogPost.pdf"); //or any other extension
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch((err) => {
+                return Promise.reject({ Error: "Something Went Wrong", err });
+            }); */
+
+        try {
+            const response = await fetch(endpoint, requestOptions);
+
+            if (!response.ok) {
+                throw new Error(response);
             }
-        })
-            .then((stream) => new Response(stream))
-            .then((response) => response.blob())
-            .then((blob) => URL.createObjectURL(blob))
-            .then((url) => console.log(url))
-            .catch((err) => console.error(err));
+
+            // Extract filename from header
+            /* const filename = response.headers
+                .get("content-disposition")
+                .split(";")
+                .find((n) => n.includes("filename="))
+                .replace("filename=", "")
+                .trim(); */
+            const blob = await response.blob();
+
+            // Download the file
+            saveAs(blob, "testing.pdf");
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     render() {
