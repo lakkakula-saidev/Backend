@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Row, Col, Spinner, Button } from "react-bootstrap";
 import BlogItem from "../blog-item";
 import Get from "../../Get.js";
-import { saveAs } from "file-saver";
 /* import download from "js-file-download";
 import { axios } from "axios"; */
 
@@ -45,28 +44,6 @@ export default class BlogList extends Component {
             .catch((err) => {
                 return Promise.reject({ Error: "Something Went Wrong", err });
             }); */
-
-        try {
-            const response = await fetch(endpoint, requestOptions);
-
-            if (!response.ok) {
-                throw new Error(response);
-            }
-
-            // Extract filename from header
-            /* const filename = response.headers
-                .get("content-disposition")
-                .split(";")
-                .find((n) => n.includes("filename="))
-                .replace("filename=", "")
-                .trim(); */
-            const blob = await response.blob();
-
-            // Download the file
-            saveAs(blob, "testing.pdf");
-        } catch (error) {
-            throw new Error(error);
-        }
     }
 
     render() {
