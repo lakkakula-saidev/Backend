@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col, Spinner, Button } from "react-bootstrap";
 import BlogItem from "../blog-item";
-import posts from "../../../data/posts.json";
 import Get from "../../Get.js";
 /* import download from "js-file-download";
 import { axios } from "axios"; */
